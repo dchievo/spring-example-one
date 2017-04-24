@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <!--  load context property for file -->
+    <context:property-placeholder location="classpath:phone.properties"/>
+    
+    <!--  define dependency -->
+    <bean id="myLight" 
+    	class="com.dchi.app.Lightservice">
+    </bean>    
+    
+    <!-- Define parent object that requests injected dependency using a setter-->
+    <bean id="myPhone"
+    		class="com.dchi.app.GalaxyS8"> 
+			<!--  <constructor-arg ref="myLight"></constructor-arg>--><!-- this is the constructor way of injecting the dependency -->
+       		<property name="lightService" ref="myLight"/> <!-- this is using the setter way -->
+   	</bean>
+
+
+    <!-- Define parent object that requests injected dependency using a constructor-->   	
+   	<bean id="myThirdPhone"
+   		class="com.dchi.app.GalaxyNote">
+   			<constructor-arg ref="myLight"/>
+   			
+   			<!-- inject property values -->
+   			<property name="name" value="${phone.name}" />
+   	</bean>
+
+    <bean id="mySecondPhone"
+    	class="com.dchi.app.LGG6">
+    	<constructor-arg ref="myLight"/>    
+    </bean>
+        
+
+</beans>
+
+
+
+
+
